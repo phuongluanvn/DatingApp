@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TestErrorsComponent implements OnInit {
   baseUrl= 'https://localhost:5001/api/';
+  validationError: string[] = [];
 
   constructor(private http: HttpClient) { }
 
@@ -22,13 +23,6 @@ export class TestErrorsComponent implements OnInit {
     })
   }
 
-  get400ValidationError(){
-    this.http.get(this.baseUrl + 'buggy/not-found').subscribe(response => {
-      console.log(response);
-    }, error => {
-      console.log(error);
-    })
-  }
 
   get400Error(){
     this.http.get(this.baseUrl + 'buggy/bad-request').subscribe(response => {
@@ -53,4 +47,13 @@ export class TestErrorsComponent implements OnInit {
       console.log(error);
     })
   }
+
+  get400ValidationError(){
+    this.http.post(this.baseUrl + 'account/register', {}).subscribe(response => {
+      console.log(response);
+    }, error => {
+      console.log(error);
+      this.validationError = error; 
+    })
+  } 
 }
